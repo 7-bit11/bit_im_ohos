@@ -1,11 +1,13 @@
 import Message from '../entity/Message';
 import ContactsView from '../view/ContactsView';
 import MessageListView from '../view/MessageListView';
+import { router } from '@kit.ArkUI';
 
 @Entry
 @Component
 struct Index {
-  @State currentIndex: number = 0
+  //默认当前页面为
+  @State currentIndex: number = 1
   private controller: TabsController = new TabsController()
   @State opacityList: number[] = []
   @State scaleList: number[] = []
@@ -41,6 +43,9 @@ struct Index {
     Tabs({ barPosition: BarPosition.End, controller: this.controller, index: this.currentIndex }) {
       TabContent() {
         MessageListView()
+          .onClick(()=>{
+            router.pushUrl({url:"pages/TestPage"},router.RouterMode.Single)
+          })
       }
       .tabBar(this.tabBuilder("消息", 0, $rawfile("chat.svg")))
       // 自定义动画变化透明度、缩放页面等
@@ -79,8 +84,8 @@ struct Index {
   @Builder
   tabBuilder(title: string, targetIndex: number, icon: ResourceStr) {
     Column() {
-      Image(icon).height(20).width(20).fillColor(this.currentIndex === targetIndex ? '#1698CE' : '#545454')
-      Text(title).fontColor(this.currentIndex === targetIndex ? '#1698CE' : '#545454')
+      Image(icon).height(20).width(20).fillColor(this.currentIndex === targetIndex ? '#2c80ff' : '#545454')
+      Text(title).fontColor(this.currentIndex === targetIndex ? '#2c80ff' : '#545454')
         .fontSize(12)
     }.width('100%')
     .height(50)

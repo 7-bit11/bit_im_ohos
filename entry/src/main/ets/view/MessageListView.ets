@@ -86,10 +86,11 @@ export default struct MessageListView {
         .fontSize(14)
         .fontColor(Color.Grey)
         .layoutWeight(1)
-      Image($rawfile("chevronright.svg"))
-        .height(30)
+      Image($rawfile("right.svg"))
+        .height(20)
         .fillColor(Color.Grey)
     }
+    .margin({top:8,bottom:8})
   }
 
   @Builder
