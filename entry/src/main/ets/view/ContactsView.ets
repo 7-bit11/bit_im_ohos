@@ -21,10 +21,11 @@ export default struct ContactsView {
   srcGroupList: Array<GroupUser> = [
     new GroupUser("特别关心")
     , new GroupUser("我的群聊",
-    [new User($rawfile("harmony.png"), "HarmonyCandies", "[5G在线]"),
+    [new User($rawfile("flutter.png"), "FlutterCandies", "[WiFi在线]"),
+      new User($rawfile("harmony.png"), "HarmonyCandies", "[5G在线]"),
       new User($rawfile("img.png"), "造物主动态桌面", "[追剧中。。。]"),])
-    , new GroupUser("关注", [new User($rawfile("bit7.jpg"), "7_bit", "[手机在线]"),])
-    , new GroupUser("同学", [
+    , new GroupUser("关注好友", [new User($rawfile("bit7.jpg"), "7_bit", "[手机在线]"),])
+    , new GroupUser("同学分组", [
     new User($rawfile("g.jpg"), "呱呱呱", "[离线]",),
     new User($rawfile("e.jpg"), "八嘎の君", "[WiFi在线]"),
     new User($rawfile("e.jpg"), "八嘎の君", "[WiFi在线]"),
@@ -112,7 +113,7 @@ export default struct ContactsView {
       }.tabBar(this._buildItemHead("好友", 0))
 
       TabContent() {
-
+        this._buildGroupUserList(this.srcGroupList)
       }.tabBar(this._buildItemHead("分组", 1))
 
       TabContent() {
@@ -166,25 +167,42 @@ export default struct ContactsView {
   ///好友列表
   @Builder
   _buildGroupUserList(srcGroupList: Array<GroupUser>) {
-    List({ space: 15 }) {
+    List({ space: 0 }) {
       ForEach(srcGroupList, (item: GroupUser, index: number) => {
-
-        // ListItem() {
-        //   Row({ space: 10 }) {
-        //     Image(item.image).width(40).height(40).borderRadius(25)
-        //     Column({ space: 5 }) {
-        //       Text(item.name)
-        //       Text(item.state).fontColor(Color.Grey)
-        //         .fontSize(12)
-        //     }
-        //     .alignItems(HorizontalAlign.Start)
-        //   }
-        //   .width("100%")
-        //   .padding({ left: 5, right: 5 })
-        //
-        // }
+        ListItemGroup({
+          space: 15,
+          header: this._buildGroupUserHeader(item.groupName, item.groupList.length / 2, item.groupList.length)
+        }) {
+          ForEach(item.groupList, (userItem: User) => {
+            ListItem() {
+              Row({ space: 15 }) {
+                Image(userItem.image).width(40).height(40).borderRadius(25)
+                Column({ space: 5 }) {
+                  Text(userItem.name)
+                  Text(userItem.state).fontColor(Color.Grey)
+                    .fontSize(12)
+                }
+                .alignItems(HorizontalAlign.Start)
+              }
+              .width("100%")
+              .padding(5)
+            }
+          })
+        }.layoutWeight(1)
       })
     }.layoutWeight(1)
     .scrollBar(BarState.Off)
+    //ListItemGroup 分组固定头部必须
+    .sticky(StickyStyle.Header | StickyStyle.Footer)
+  }
+
+  @Builder
+  _buildGroupUserHeader(name: string, count: number, total: number) {
+    Row() {
+      Text(name)
+      Blank()
+      Text(`${Math.floor(count)}/${total}`).fontColor(Color.Grey).fontSize(12)
+    }.width("100%").padding({ top: 5, bottom: 5 })
+    .backgroundColor(Color.White)
   }
 }
