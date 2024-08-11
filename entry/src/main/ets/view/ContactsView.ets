@@ -1,3 +1,4 @@
+import GroupUser from '../entity/GroupUser'
 import User from '../entity/User'
 import MessageListView from './MessageListView'
 
@@ -16,6 +17,20 @@ export default struct ContactsView {
     new User($rawfile("e.jpg"), "八嘎の君", "[WiFi在线]"),
     new User($rawfile("e.jpg"), "八嘎の君", "[WiFi在线]"),
     new User($rawfile("e.jpg"), "八嘎の君", "[WiFi在线]")
+  ];
+  srcGroupList: Array<GroupUser> = [
+    new GroupUser("特别关心")
+    , new GroupUser("我的群聊",
+    [new User($rawfile("harmony.png"), "HarmonyCandies", "[5G在线]"),
+      new User($rawfile("img.png"), "造物主动态桌面", "[追剧中。。。]"),])
+    , new GroupUser("关注", [new User($rawfile("bit7.jpg"), "7_bit", "[手机在线]"),])
+    , new GroupUser("同学", [
+    new User($rawfile("g.jpg"), "呱呱呱", "[离线]",),
+    new User($rawfile("e.jpg"), "八嘎の君", "[WiFi在线]"),
+    new User($rawfile("e.jpg"), "八嘎の君", "[WiFi在线]"),
+    new User($rawfile("e.jpg"), "八嘎の君", "[WiFi在线]"),
+    new User($rawfile("e.jpg"), "八嘎の君", "[WiFi在线]"),
+  ])
   ];
 
   build() {
@@ -84,7 +99,7 @@ export default struct ContactsView {
     }
     .width("100%")
     .onClick(onEvent)
-    .margin({ top: 15})
+    .margin({ top: 15 })
   }
 
   list: Array<number> = [0, 1, 2, 3, 4, 5, 6, 7, 689, 7];
@@ -93,11 +108,11 @@ export default struct ContactsView {
   _buildHead() {
     Tabs({ controller: this.controller, index: this.currentIndex }) {
       TabContent() {
-        Text("好友")
+        this._buildUserList(this.srcList)
       }.tabBar(this._buildItemHead("好友", 0))
 
       TabContent() {
-        this._buildUserList(this.srcList)
+
       }.tabBar(this._buildItemHead("分组", 1))
 
       TabContent() {
@@ -124,6 +139,7 @@ export default struct ContactsView {
     Text(str).fontColor(this.currentIndex === targetIndex ? '#2c80ff' : '#545454')
   }
 
+  ///好友列表
   @Builder
   _buildUserList(srcList: Array<User>) {
     List({ space: 15 }) {
@@ -142,6 +158,31 @@ export default struct ContactsView {
           .padding({ left: 5, right: 5 })
 
         }
+      })
+    }.layoutWeight(1)
+    .scrollBar(BarState.Off)
+  }
+
+  ///好友列表
+  @Builder
+  _buildGroupUserList(srcGroupList: Array<GroupUser>) {
+    List({ space: 15 }) {
+      ForEach(srcGroupList, (item: GroupUser, index: number) => {
+
+        // ListItem() {
+        //   Row({ space: 10 }) {
+        //     Image(item.image).width(40).height(40).borderRadius(25)
+        //     Column({ space: 5 }) {
+        //       Text(item.name)
+        //       Text(item.state).fontColor(Color.Grey)
+        //         .fontSize(12)
+        //     }
+        //     .alignItems(HorizontalAlign.Start)
+        //   }
+        //   .width("100%")
+        //   .padding({ left: 5, right: 5 })
+        //
+        // }
       })
     }.layoutWeight(1)
     .scrollBar(BarState.Off)
