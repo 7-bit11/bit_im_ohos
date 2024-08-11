@@ -3,7 +3,7 @@ import Message from '../entity/Message';
 @Component
 export default struct MessageListView {
   srcList: Array<Message> = [
-    new Message($rawfile("flutter.png"), "HarmonyCandies", "7_bit | [Uint8List] | 我就是笨蛋", ":你们在干嘛",
+    new Message($rawfile("flutter.png"), "FlutterCandies", "7_bit | [Uint8List] | 我就是笨蛋", ":你们在干嘛",
       "下午3:30",
       100),
     new Message($rawfile("harmony.png"), "HarmonyCandies", "道长 | 深圳 | PHP", ":可以开始卷了大家", "刚刚", 0),
