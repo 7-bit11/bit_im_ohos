@@ -1,6 +1,6 @@
 import ContactsData from '../data/ContactsData'
 import GroupUser from '../entity/GroupUser'
-import User from '../entity/User'
+import User, { UserState } from '../entity/User'
 import MessageListView from './MessageListView'
 
 @Component
@@ -77,8 +77,6 @@ export default struct ContactsView {
     .margin({ top: 15 })
   }
 
-  list: Array<number> = [0, 1, 2, 3, 4, 5, 6, 7, 689, 7];
-
   @Builder
   _buildHead() {
     Tabs({ controller: this.controller, index: this.currentIndex }) {
@@ -91,19 +89,19 @@ export default struct ContactsView {
       }.tabBar(this._buildItemHead("分组", 1))
 
       TabContent() {
-        Text("群聊")
+        this._buildGroupUserList(ContactsData.srcGroupList)
       }.tabBar(this._buildItemHead("群聊", 2))
 
       TabContent() {
-        Text("频道")
+        this._buildGroupUserList(ContactsData.srcGroupList)
       }.tabBar(this._buildItemHead("频道", 3))
 
       TabContent() {
-        Text("设备")
+        this._buildGroupUserList(ContactsData.srcGroupList)
       }.tabBar(this._buildItemHead("设备", 4))
 
       TabContent() {
-        Text("通讯录")
+        this._buildGroupUserList(ContactsData.srcGroupList)
       }.tabBar(this._buildItemHead("通讯录", 5))
     }.layoutWeight(1)
     .onChange(index => this.currentIndex = index)
@@ -120,46 +118,36 @@ export default struct ContactsView {
     List({ space: 15 }) {
       ForEach(srcList, (item: User, index: number) => {
         ListItem() {
-          Row({ space: 10 }) {
-            Image(item.image).width(40).height(40).borderRadius(25)
-            Column({ space: 5 }) {
-              Text(item.name)
-              Text(item.state).fontColor(Color.Grey)
-                .fontSize(12)
-            }
-            .alignItems(HorizontalAlign.Start)
-          }
-          .width("100%")
-          .padding({ left: 5, right: 5 })
-
+          _buildUserItem(item)
         }
       })
     }.layoutWeight(1)
     .scrollBar(BarState.Off)
   }
 
-  ///好友列表
+  _getOnLineCount(groupList: User[]): number {
+    let count: number = 0;
+    for (let index = 0; index < groupList.length; index++) {
+      if (groupList[index].state == UserState.onLine) {
+        count++
+      }
+    }
+    return count;
+  }
+
+  ///分组列表
   @Builder
   _buildGroupUserList(srcGroupList: Array<GroupUser>) {
     List({ space: 0 }) {
       ForEach(srcGroupList, (item: GroupUser, index: number) => {
         ListItemGroup({
           space: 15,
-          header: this._buildGroupUserHeader(item.groupName, item.groupList.length / 2, item.groupList.length)
+          header: this._buildGroupUserHeader(item.groupName, this._getOnLineCount(item.groupList),
+            item.groupList.length)
         }) {
           ForEach(item.groupList, (userItem: User) => {
             ListItem() {
-              Row({ space: 15 }) {
-                Image(userItem.image).width(40).height(40).borderRadius(25)
-                Column({ space: 5 }) {
-                  Text(userItem.name)
-                  Text(userItem.state).fontColor(Color.Grey)
-                    .fontSize(12)
-                }
-                .alignItems(HorizontalAlign.Start)
-              }
-              .width("100%")
-              .padding(5)
+              _buildUserItem(userItem)
             }
           })
         }.layoutWeight(1)
@@ -179,4 +167,28 @@ export default struct ContactsView {
     }.width("100%").padding({ top: 5, bottom: 5 })
     .backgroundColor(Color.White)
   }
+}
+
+@Builder
+function _buildUserItem(item: User) {
+  Row({ space: 15 }) {
+    Image(item.image).width(40).height(40).borderRadius(25)
+      .colorFilter(
+        item.state === UserState.offLine ? [
+          0.33, 0.33, 0.33, 0, 0, //  # Red output = 0.33 * R + 0.33 * G + 0.33 * B
+          0.33, 0.33, 0.33, 0, 0, //# Green output = 0.33 * R + 0.33 * G + 0.33 * B
+          0.33, 0.33, 0.33, 0, 0, // # Blue output = 0.33 * R + 0.33 * G + 0.33 * B
+          0, 0, 0, 1, 0// # Alpha output = 1 * A (unchanged)
+        ] : []
+      )
+    Column({ space: 5 }) {
+      Text(item.name)
+      Text(item.stateMsg).fontColor(Color.Grey)
+        .fontSize(12)
+    }
+    .alignItems(HorizontalAlign.Start)
+  }
+  .width("100%")
+  .padding(5)
+
 }

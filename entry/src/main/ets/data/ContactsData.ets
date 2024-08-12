@@ -9,10 +9,10 @@ export default class ContactsData {
     new User($rawfile("bit7.jpg"), "7_bit", "[手机在线]"),
     new User($rawfile("g.jpg"), "呱呱呱", "[离线]", UserState.offLine),
     new User($rawfile("e.jpg"), "八嘎の君", "[WiFi在线]",),
-    new User($rawfile("e.jpg"), "八嘎の君", "[WiFi在线]", UserState.offLine),
-    new User($rawfile("e.jpg"), "八嘎の君", "[WiFi在线]"),
-    new User($rawfile("e.jpg"), "八嘎の君", "[WiFi在线]"),
-    new User($rawfile("e.jpg"), "八嘎の君", "[WiFi在线]")
+    new User($rawfile("1.jpg"), "星期一", "[离线]", UserState.offLine),
+    new User($rawfile("2.jpg"), "星期二", "[WiFi在线]"),
+    new User($rawfile("3.jpg"), "星期三", "[WiFi在线]"),
+    new User($rawfile("e.jpg"), "星期四", "[WiFi在线]")
   ];
   static srcGroupList: Array<GroupUser> = [
     new GroupUser("特别关心")
@@ -23,10 +23,12 @@ export default class ContactsData {
     , new GroupUser("关注好友", [new User($rawfile("bit7.jpg"), "7_bit", "[手机在线]"),])
     , new GroupUser("同学分组", [
     new User($rawfile("g.jpg"), "呱呱呱", "[离线]", UserState.offLine),
-    new User($rawfile("e.jpg"), "八嘎の君", "[WiFi在线]", UserState.offLine),
+    new User($rawfile("e.jpg"), "八嘎の君", "[离线]", UserState.offLine),
     new User($rawfile("e.jpg"), "八嘎の君", "[WiFi在线]"),
-    new User($rawfile("e.jpg"), "八嘎の君", "[WiFi在线]", UserState.offLine),
-    new User($rawfile("e.jpg"), "八嘎の君", "[WiFi在线]"),
+    new User($rawfile("1.jpg"), "星期一", "[离线]", UserState.offLine),
+    new User($rawfile("2.jpg"), "星期二", "[WiFi在线]"),
+    new User($rawfile("3.jpg"), "星期三", "[WiFi在线]"),
+    new User($rawfile("4.jpg"), "星期四", "[WiFi在线]")
   ])
   ];
 }
