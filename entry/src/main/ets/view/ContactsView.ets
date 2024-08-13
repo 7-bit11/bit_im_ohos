@@ -190,5 +190,4 @@ function _buildUserItem(item: User) {
   }
   .width("100%")
   .padding(5)
-
 }
