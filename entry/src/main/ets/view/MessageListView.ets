@@ -1,4 +1,5 @@
 import Message from '../entity/Message';
+import { router } from '@kit.ArkUI';
 
 @Component
 export default struct MessageListView {
@@ -31,11 +32,18 @@ export default struct MessageListView {
 
         ListItem() {
           this._buildMessageList(this.srcList)
+
+
         }
       }.layoutWeight(1).scrollBar(BarState.Off)
 
     }.width("100%").height("100%")
-    .padding({top:15,left:15,right:15,bottom:5}).backgroundColor(Color.White)
+    .padding({
+      top: 15,
+      left: 15,
+      right: 15,
+      bottom: 5
+    }).backgroundColor(Color.White)
   }
 
   @Builder
@@ -90,7 +98,7 @@ export default struct MessageListView {
         .height(20)
         .fillColor(Color.Grey)
     }
-    .margin({top:8,bottom:8})
+    .margin({ top: 8, bottom: 8 })
   }
 
   @Builder
@@ -133,5 +141,8 @@ export default struct MessageListView {
         }.height(20).margin({ left: 15 })
       }
     }.width("100%")
+    .onClick(() => {
+      router.pushUrl({ url: 'pages/message/dialogueListPage' }, router.RouterMode.Single)
+    })
   }
 }
