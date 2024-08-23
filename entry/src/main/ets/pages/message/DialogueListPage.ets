@@ -7,12 +7,18 @@ struct DialogueListPage {
   scroller: Scroller = new Scroller()
   @State name: string = "";
   params: object = router.getParams();
+  @State isFocus: boolean = false;
+  controller: TextInputController = new TextInputController()
+  @State msg?: string = undefined;
 
   aboutToAppear(): void {
     this.name = this.params['name'];
+    setTimeout(() => {
+      this.scroller.scrollToIndex(this.dialogueList.length - 1, true);
+    }, 400)
   }
 
-  dialogueList: Array<Dialogue> = [
+  @State dialogueList: Array<Dialogue> = [
     new Dialogue(MessageType.text,
       '你在学什么啊你在学什么啊你在学什么啊你在学什么啊你在学什么啊你在学什么啊你在学什么啊你在学什么啊',
       "7_bit | [Uint8List] | 失眠症",
@@ -63,9 +69,16 @@ struct DialogueListPage {
             }
           }
         })
-      }.layoutWeight(1).backgroundColor("#f1f1f1")
-      .padding(10)
+      }
+      .layoutWeight(1)
+      .backgroundColor("#f1f1f1")
+      .padding({ left: 10, right: 10, bottom: 5 })
       .scrollBar(BarState.Off)
+      .onClick(() => {
+        this.isFocus = false
+        this.controller.stopEditing()
+      })
+
       this.buildBottomBar()
     }.width("100%").height("100%")
   }
@@ -78,9 +91,6 @@ struct DialogueListPage {
       })
 
       Text(this.name + "🍬").fontSize(18)
-        .onClick(() => {
-          this.scroller.scrollToIndex(this.dialogueList.length - 1, true);
-        })
       Blank()
       Image($rawfile("Hamburger_MD.svg")).width(24).height(24).fillColor(Color.Black)
     }
@@ -96,9 +106,9 @@ struct DialogueListPage {
 
   @Builder
   buildBottomBar() {
-    Row({ space: 10 }) {
+    Row({ space: 8 }) {
       Image($rawfile("microphone.svg")).width(24).height(24).fillColor(Color.Black)
-      TextInput()
+      TextInput({ controller: this.controller, text: this.msg })
         .width('95%')
         .height(35)
         .margin(5)
@@ -110,7 +120,34 @@ struct DialogueListPage {
         }))
         .layoutWeight(1)
         .borderRadius(8)
-      Image($rawfile("Star-Struck.svg")).width(24).height(24).fillColor(Color.Black)
+        .onChange((v) => {
+          this.msg = v;
+        })
+        .onFocus(() => this.isFocus = true)
+        .onBlur(() => this.isFocus = false)
+      if (this.isFocus) {
+        Button('发送')
+          .backgroundColor("#0099ff")
+          .fontColor(Color.White)
+          .fontSize(12)
+          .height(30)
+          .type(ButtonType.Normal)
+          .borderRadius(6)
+          .onClick(() => {
+            console.log(this.msg);
+            if (this.msg) {
+              this.dialogueList.push(new Dialogue(MessageType.text,
+                this.msg,
+                "7_bit | [Uint8List] | 失眠症",
+                'https://p3-passport.byteacctimg.com/img/user-avatar/314da9adcd6dacacb8ea4a18c89639ea~140x140.awebp',
+                RoleType.me))
+              this.scroller.scrollToIndex(this.dialogueList.length - 1)
+              this.msg = undefined
+            }
+          })
+      } else {
+        Image($rawfile("Star-Struck.svg")).width(24).height(24).fillColor(Color.Black)
+      }
       Image($rawfile("Add_Plus_Circle.svg")).width(24).height(24).fillColor(Color.Black)
     }
     .padding({
