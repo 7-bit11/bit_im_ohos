@@ -13,7 +13,8 @@ struct DialogueListPage {
   }
 
   dialogueList: Array<Dialogue> = [
-    new Dialogue(MessageType.text, '你在学什么啊你在学什么啊你在学什么啊你在学什么啊你在学什么啊你在学什么啊你在学什么啊你在学什么啊',
+    new Dialogue(MessageType.text,
+      '你在学什么啊你在学什么啊你在学什么啊你在学什么啊你在学什么啊你在学什么啊你在学什么啊你在学什么啊',
       "7_bit | [Uint8List] | 失眠症",
       'https://p3-passport.byteacctimg.com/img/user-avatar/314da9adcd6dacacb8ea4a18c89639ea~140x140.awebp',
       RoleType.me),
@@ -29,52 +30,29 @@ struct DialogueListPage {
       "编程的小白",
       'https://p9-passport.byteacctimg.com/img/user-avatar/af5f7ee5f0c449f25fc0b32c050bf100~150x150.awebp',
       RoleType.you),
-    new Dialogue(MessageType.text, '4',
-      "7_bit | [Uint8List] | 失眠症",
-      'https://p3-passport.byteacctimg.com/img/user-avatar/314da9adcd6dacacb8ea4a18c89639ea~140x140.awebp',
+    new Dialogue(MessageType.text, '黑宣也是宣',
+      "糖果小蜜 | 上海 | 少女折寿中...",
+      'https://pica.zhimg.com/v2-5bd8c44a289103540423859570c878d9_xl.jpg?source=32738c0c',
       RoleType.you),
-    new Dialogue(MessageType.image, 'https://konachan.net/sample/2c00cdddf9ee0da9c34dd7934e49b16c/Konachan.com%20-%20380411%20sample.jpg',
+    new Dialogue(MessageType.image,
+      'https://konachan.net/sample/2c00cdddf9ee0da9c34dd7934e49b16c/Konachan.com%20-%20380411%20sample.jpg',
       "7_bit | [Uint8List] | 失眠症",
       'https://p3-passport.byteacctimg.com/img/user-avatar/314da9adcd6dacacb8ea4a18c89639ea~140x140.awebp',
       RoleType.me),
-    new Dialogue(MessageType.text, '5',
+    new Dialogue(MessageType.text, 'Flutter开发',
+      "汗炒灰",
+      'https://p6-passport.byteacctimg.com/img/user-avatar/7dcd75f8bfddf5f769e353823694cd5c~70x70.awebp',
+      RoleType.you),
+    new Dialogue(MessageType.text,
+      '鸿蒙next 高仿QQ首页 快来看看我是如何实现的吧！',
       "7_bit | [Uint8List] | 失眠症",
       'https://p3-passport.byteacctimg.com/img/user-avatar/314da9adcd6dacacb8ea4a18c89639ea~140x140.awebp',
       RoleType.me),
-    new Dialogue(MessageType.text, '6',
-      "7_bit | [Uint8List] | 失眠症",
-      'https://p3-passport.byteacctimg.com/img/user-avatar/314da9adcd6dacacb8ea4a18c89639ea~140x140.awebp',
-      RoleType.you),
-    new Dialogue(MessageType.text, '7',
-      "7_bit | [Uint8List] | 失眠症",
-      'https://p3-passport.byteacctimg.com/img/user-avatar/314da9adcd6dacacb8ea4a18c89639ea~140x140.awebp',
-      RoleType.you),
-    new Dialogue(MessageType.text, '8',
-      "7_bit | [Uint8List] | 失眠症",
-      'https://p3-passport.byteacctimg.com/img/user-avatar/314da9adcd6dacacb8ea4a18c89639ea~140x140.awebp',
-      RoleType.me),
-    new Dialogue(MessageType.text, '9',
-      "7_bit | [Uint8List] | 失眠症",
-      'https://p3-passport.byteacctimg.com/img/user-avatar/314da9adcd6dacacb8ea4a18c89639ea~140x140.awebp',
-      RoleType.you),
-    new Dialogue(MessageType.text, '10',
-      "7_bit | [Uint8List] | 失眠症",
-      'https://p3-passport.byteacctimg.com/img/user-avatar/314da9adcd6dacacb8ea4a18c89639ea~140x140.awebp',
-      RoleType.you),
-    new Dialogue(MessageType.text, '11',
-      "7_bit | [Uint8List] | 失眠症",
-      'https://p3-passport.byteacctimg.com/img/user-avatar/314da9adcd6dacacb8ea4a18c89639ea~140x140.awebp',
-      RoleType.you),
-    new Dialogue(MessageType.text, 'hhhhhh',
-      "7_bit | [Uint8List] | 失眠症",
-      'https://p3-passport.byteacctimg.com/img/user-avatar/314da9adcd6dacacb8ea4a18c89639ea~140x140.awebp',
-      RoleType.you),
   ];
 
   build() {
     Column() {
       this.buildAppbar()
-
       List({ space: 20, scroller: this.scroller }) {
         ForEach(this.dialogueList, (item: Dialogue, index: number) => {
           ListItem() {
@@ -84,12 +62,10 @@ struct DialogueListPage {
               this.youItem(item)
             }
           }
-
         })
       }.layoutWeight(1).backgroundColor("#f1f1f1")
       .padding(10)
       .scrollBar(BarState.Off)
-
       this.buildBottomBar()
     }.width("100%").height("100%")
   }
@@ -147,11 +123,9 @@ struct DialogueListPage {
 
   @Builder
   meItem(item: Dialogue) {
-
     Column({ space: 5 }) {
       Text(item.name).fontSize(12)
       Row() {
-
         Flex({
           wrap: FlexWrap.WrapReverse,
           direction: FlexDirection.Row,
@@ -174,15 +148,18 @@ struct DialogueListPage {
               .width("70%")
           }
         }.layoutWeight(1)
-        Text().width(5)
-        Image(item.url).width(45).height(45).borderRadius(30)
 
-      }.alignItems(VerticalAlign.Center)
-      .justifyContent(FlexAlign.SpaceBetween)
-      .width("100%")
+        Text().width(5)
+        Image(item.url).width(40).height(40).borderRadius(30)
+
+      }.alignItems(VerticalAlign.Top)
+      .justifyContent(FlexAlign.End)
+      .width("90%")
+
     }
     .justifyContent(FlexAlign.End)
     .alignItems(HorizontalAlign.End)
+    .width("100%")
   }
 
   @Builder
@@ -190,26 +167,33 @@ struct DialogueListPage {
     Column({ space: 5 }) {
       Text(item.name).fontSize(12)
       Row() {
+        Image(item.url).width(40).height(40).borderRadius(30)
+        Text().width(5)
         Flex({
-          wrap: FlexWrap.Wrap,
+          wrap: FlexWrap.WrapReverse,
           direction: FlexDirection.Row,
-          justifyContent: FlexAlign.Start,
-          alignItems: ItemAlign.Center
+          justifyContent: FlexAlign.End,
+          alignItems: ItemAlign.End
         }) {
-          Image(item.url).width(45).height(45).borderRadius(30)
-          Text().width(5)
-          Text(item.msg).backgroundColor(Color.White)
-            .padding({
-              left: 10,
-              right: 10,
-              top: 8,
-              bottom: 8
-            }).fontColor(Color.Black)
-            .borderRadius(8)
-        }
-      }.alignItems(VerticalAlign.Center)
+          if (item.msgType == MessageType.text) {
+            Text(item.msg).backgroundColor(Color.White)
+              .padding({
+                left: 12,
+                right: 12,
+                top: 10,
+                bottom: 10
+              }).fontColor(Color.Black)
+              .borderRadius(8)
+          } else if (item.msgType == MessageType.image) {
+            Image(item.msg)
+              .objectFit(ImageFit.Auto)
+              .alt($rawfile("img.png"))
+              .width("70%")
+          }
+        }.layoutWeight(1)
+      }.alignItems(VerticalAlign.Top)
       .justifyContent(FlexAlign.SpaceBetween)
-      .width("100%")
+      .width("90%")
     }
     .justifyContent(FlexAlign.Start)
     .alignItems(HorizontalAlign.Start)
