@@ -3,12 +3,13 @@ export default class Dialogue {
   roleType: RoleType;
   msg: string;
   name: string;
-
-  constructor(msgType: MessageType, msg: string, name: string, roleType?: RoleType) {
+  url:string;
+  constructor(msgType: MessageType, msg: string, name: string, url:string, roleType?: RoleType) {
     this.msgType = msgType;
     this.roleType = roleType ?? RoleType.me;
     this.msg = msg;
     this.name = name;
+    this.url=url
   }
 }
 
