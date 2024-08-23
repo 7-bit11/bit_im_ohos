@@ -112,7 +112,6 @@ struct DialogueListPage {
         .width('95%')
         .height(35)
         .margin(5)
-        .maxLength(9)
         .onSecurityStateChange(((isShowPassword: boolean) => {
           // 更新密码显示状态
           console.info('isShowPassword', isShowPassword)
