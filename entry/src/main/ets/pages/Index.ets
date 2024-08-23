@@ -7,7 +7,7 @@ import { router } from '@kit.ArkUI';
 @Component
 struct Index {
   //默认当前页面为
-  @State currentIndex: number = 1
+  @State currentIndex: number = 0
   private controller: TabsController = new TabsController()
   @State opacityList: number[] = []
   @State scaleList: number[] = []
