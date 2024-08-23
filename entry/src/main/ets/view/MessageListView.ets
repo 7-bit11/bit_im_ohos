@@ -142,7 +142,12 @@ export default struct MessageListView {
       }
     }.width("100%")
     .onClick(() => {
-      router.pushUrl({ url: 'pages/message/dialogueListPage' }, router.RouterMode.Single)
+      router.pushUrl({ url: 'pages/message/DialogueListPage', params: { "name": msg.groupName } },
+        router.RouterMode.Single, error => {
+          if (error) {
+            console.log('跳转失败 code:' + error.code + ' msg:' + error.message)
+          }
+        })
     })
   }
 }
